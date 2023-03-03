@@ -1,15 +1,15 @@
 """ get plotter module """
 from prevision_quantum_nn.postprocessing.plotter.phase_space_plotter_1d \
-        import PhaseSpacePlotter1D
+    import PhaseSpacePlotter1D
 from prevision_quantum_nn.postprocessing.plotter.phase_space_plotter_2d \
-        import PhaseSpacePlotter2D
+    import PhaseSpacePlotter2D
 
 
 def get_plotter(params):
     """Returns a plotter given plotting parameters.
 
     Args:
-        params (dictionnary):parameters of the plotter
+        params (dictionary):parameters of the plotter
 
     Returns:
         plotter: PhaseSpacePlotter
@@ -23,7 +23,7 @@ def get_plotter(params):
     elif dim > 2:
         plotter = PhaseSpacePlotter2D(params)
         print("The dimension is bigger than 2. A PCA will be applied. "
-        f"Current dim: {dim}") 
+              f"Current dim: {dim}")
     else:
         raise ValueError("Plotting dimension "
                          "should be 1, 2 or more. "

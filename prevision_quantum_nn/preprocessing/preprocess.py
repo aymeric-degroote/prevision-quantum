@@ -80,7 +80,18 @@ class Preprocessor:
 
         self.check_preprocessor()
         self.logger = logging.getLogger("preprocessing")
-               
+
+    @classmethod
+    def get_params_attributes(cls):
+        """Attributes that can be set as a parameter"""
+        return ["verbose",
+                "polynomial_degree",
+                "polynomial_expansion_type",
+                "feature_engineering",
+                "force_dimension_reduction",
+                "dimension_reduction_fitter",
+                "padding_parameter"]
+
     def __getstate__(self):
         d = dict(self.__dict__)
         del d['logger']
@@ -254,7 +265,7 @@ class Preprocessor:
         num_components = None
 
         # Continuous Variable quantum computing
-        if self.architecture_type == "continuous_variable":
+        if self.architecture_type == "cv":
             if self.encoding == "amplitude":
                 raise ValueError("Amplitude encoding incompatible with "
                                  "Continuous Variable model")
@@ -271,7 +282,7 @@ class Preprocessor:
                                      "Force dimension reduction to fit "
                                      "data into available qumodes")
         # Discrete quantum computing
-        elif self.architecture_type == "discrete":
+        elif self.architecture_type == "qubit":
             # amplitude or mottonen encoding
             if self.encoding == "amplitude" or self.encoding == "mottonen":
                 num_amplitudes = 2 ** self.num_q
@@ -311,7 +322,9 @@ class Preprocessor:
                                          f"available qubits ({self.num_q}). "
                                          "Force dimension reduction to fit "
                                          "data into available amplitudes")
-
+        else:
+            raise ValueError("Invalid architecture. "
+                             "Choices are qubit or cv")
         self.reduce_dimension = reduce_dimension
         self.num_components = num_components
 
@@ -327,6 +340,8 @@ class Preprocessor:
             padding_dim = 2 ** self.num_q - num_features
         elif self.encoding in ["angle", "displacement", "squeezing"]:
             padding_dim = self.num_q - num_features
+        else:
+            padding_dim = 0
 
         # apply padding
         if padding_dim > 0:

@@ -4,6 +4,7 @@ contains the classes to handle datasets
 """
 
 import numpy as np
+import random
 
 
 class DataSet:
@@ -24,6 +25,21 @@ class DataSet:
         self.train_labels = None
         self.val_features = None
         self.val_labels = None
+
+    def sample(self, sample_size):
+        """Samples the arrays of features and labels of the training set
+
+        Attributes:
+            sample_size (int):number of samples
+        Returns:
+            X (numpy array): sampled array of features
+            y (numpy array): sampled array of labels
+        """
+        sample_size = min(sample_size, len(self.train_features))
+        index = random.sample(range(len(self.train_features)), sample_size)
+        X = self.train_features[index]
+        y = self.train_labels[index]
+        return X, y
 
     def from_numpy(self,
                    train_features,
