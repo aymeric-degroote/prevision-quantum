@@ -23,3 +23,7 @@ It is developed by `prevision.io <https://prevision.io/>`_.
 It is built over `pennylane <https://pennylane.ai/>`_, developped by `Xanadu <https://www.xanadu.ai/>`_.
 
 For further information on the usage of the library, refer to the `documentation <https://prevision-quantum-nn.readthedocs.io/en/latest/index.html#>`_.
+
+
+Personal notes: Unfortunately, I suspect Prevision.io to have run out of business, as their website yields an error 404... 
+This fork corresponds to the branch I developed during my internship there. We didn't have time to do a pull request.
